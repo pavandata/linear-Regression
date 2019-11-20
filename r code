@@ -1,0 +1,180 @@
+1) Calories_consumed-> predict weight gained using calories consumed
+2) Delivery_time -> Predict delivery time using sorting time 
+3) Emp_data -> Build a prediction model for Churn_out_rate 
+4) Salary_hike -> Build a prediction model for Salary_hike
+
+
+Do the necessary transformations for input variables for getting better R^2 value for the model prepared.
+1)##predicted weight gained calorie consumed##
+
+1) Calories_consumed-> predict weight gained using calories consumed
+library(readr)
+dataset <- read.csv(file.choose())
+View(dataset)
+##First business model##
+summary(dataset)
+describe(dataset)
+## Weight gained in grams mean=357.7,median=200,IQR=537.5-114.5=423##
+## calories consumed mean=2341,median=2250,IQR=1047 From this we can say mean and median are close so the data may be normally distributed##
+## second business model##
+attach(dataset)
+var(Weight.gained..grams.)##111350.7 Data in this variable is varying from the mean the data is spread from the mean##
+sd(Weight.gained..grams.)##333.6925 Data in this variable is 333.6925 deviating from the mean##
+var(Calories.Consumed)##565668.7 Data in this variable is desperised from the mean##
+sd(Calories.Consumed)##752.1095 Data in this variable is spread from the mean##
+## Third business model##
+## Skewness says wheather the data is symmetric are skewed##
+skewness(Calories.Consumed)##0.5825597 The data is moderately positively skewed##
+skewness(Weight.gained..grams.)##1.116977 The data is highly positively skewed##
+##Fourth business model##
+##kurtosis says the shape of the data##
+kurtosis(Calories.Consumed)##2.403367 if the kurthosis is less then three then the data has broader centeral peak and the data is spread##
+kurtosis(Weight.gained..grams.)##2.891938  if the kurthosis is less then three then the data has broader centeral peak and the data is spread##
+##Fifth business model##
+plot(dataset)##There is the linear relationship between two variables##
+plot_histogram(Calories.Consumed)##histogram is known frequencies##
+boxplot(Calories.Consumed)## Box plot is used for to known about the outliners##
+boxplot(Weight.gained..grams.)
+plot_correlation(dataset)## Correlation between the variables is 0.95 which is good and says there is strong relationship between the variables##
+##Model Bulding##
+model <- lm(Weight.gained..grams.~ Calories.Consumed)
+summary(model)
+plot(model)
+##Multiple R-squared:  0.8968,	Adjusted R-squared:  0.8882 ##
+pred <- predict(model)
+
+2) Delivery_time -> Predict delivery time using sorting time 
+library(readr)
+dataset <- read.csv(file.choose())
+View(dataset)
+##First business model##
+summary(dataset)
+describe(dataset)
+## Delivery time mean=16.79,median=17.83,IQR=5.75##
+## sorting time mean=6.19,median=6,IQR=4 From this we can say mean and median are close so the data may be normally distributed##
+## second business model##
+attach(dataset)
+var(Delivery.Time)##25.75 Data in this variable is varying from the mean the data is spread from the mean##
+sd(Delivery.Time)##5.074901 Data in this variable is  deviating from the mean##
+var(Sorting.Time)##6.46 Data in this variable  close to mean##
+sd(Sorting.Time)##2.54Data in this variable is spread from the mean##
+## Third business model##
+## Skewness says wheather the data is symmetric are skewed##
+skewness(Sorting.Time)##0.04368099 The data is weakly positively skewed##
+skewness(Delivery.Time)##0.326 The data is weakly positively skewed##
+##Fourth business model##
+##kurtosis says the shape of the data##
+kurtosis(Sorting.Time)##1.83461if the kurthosis is less then three then the data has broader centeral peak and the data is spread##
+kurtosis(Delivery.Time)##2.974414  if the kurthosis is less then three then the data has broader centeral peak and the data is spread##
+##Fifth business model##
+plot(dataset)##There is the linear relationship between two variables##
+plot_histogram(Sorting.Time)##histogram is known frequencies##
+boxplot(Sorting.Time)## Box plot is used for to known about the outliners##
+boxplot(Delivery.Time)
+plot_correlation(dataset)## Correlation between the variables is 0.83 which is good and says there is strong relationship between the variables##
+##Model Bulding##
+model <- lm(Delivery.Time~ Sorting.Time)
+summary(model)
+plot(model)
+##Multiple R-squared:  0.6823,	Adjusted R-squared:  0.6655 ##
+## so we should go for transformation of the either one of variable##
+model1 <- lm(Delivery.Time~log(Sorting.Time))
+summary(model1)
+##Multiple R-squared:  0.6954,	Adjusted R-squared:  0.6794##
+model1 <- lm(log(Delivery.Time)~Sorting.Time)
+summary(model1)
+##Multiple R-squared:  0.7109,	Adjusted R-squared:  0.6957 ##
+summary(model1)
+pred <- predict(model)
+pred
+
+
+3)Emp_data -> Build a prediction model for Churn_out_rate 
+library(readr)
+dataset <- read.csv(file.choose())
+View(dataset)
+##First business model##
+summary(dataset)
+describe(dataset)
+## Salary_hike mean=1689,median=1675,IQR=106##
+## Churn_out_rate  mean=72.90,median=71,IQR=13From this we can say mean and median are close so the data may be normally distributed##
+## second business model##
+attach(dataset)
+var(Salary_hike)##8481.822 Data in this variable is varying from the mean the data is spread from the mean##
+sd(Salary_hike)##92.09681 Data in this variable is  deviating from the mean##
+var(Churn_out_rate)##105.211 Data in this variable  close to mean##
+sd(Churn_out_rate)## 10.25 Data in this variable is spread from the mean##
+## Third business model##
+## Skewness says wheather the data is symmetric are skewed##
+skewness(Salary_hike)##0.7238458 The data is moderate positively skewed##
+skewness(Churn_out_rate)##0.5457 The data is moderate positively skewed##
+##Fourth business model##
+##kurtosis says the shape of the data##
+kurtosis(Salary_hike)##2.548327 if the kurthosis is less then three then the data has broader centeral peak and the data is spread##
+kurtosis(Churn_out_rate)##2.268898   if the kurthosis is less then three then the data has broader centeral peak and the data is spread##
+##Fifth business model##
+plot(dataset)##There is the linear relationship between two variables##
+plot_histogram(Salary_hike)##histogram is known frequencies##
+boxplot(Churn_out_rate)## Box plot is used for to known about the outliners##
+boxplot(Salary_hike)
+plot_correlation(dataset)## Correlation between the variables is -0.91 which is good and says there is strong relationship between the variables##
+##Model Bulding##
+model <- lm(Churn_out_rate~ Salary_hike)
+summary(model)
+plot(model)
+##Multiple R-squared:  0.8312,	Adjusted R-squared:  0.8101  ##
+## so we should go for transformation of the either one of variable##
+model1 <- lm(Churn_out_rate~log(Salary_hike))
+summary(model1)
+##Multiple R-squared:  0.8486,	Adjusted R-squared:  0.8297 ##
+model1 <- lm(log(Churn_out_rate)~Salary_hike)
+summary(model1)
+##Multiple R-squared:  0.8735,	Adjusted R-squared:  0.8577  ##
+summary(model1)
+pred <- predict(model)
+pred
+
+
+4)Salary_hike -> Build a prediction model for Salary_hike
+
+
+Do the necessary transformations for input variables for getting better R^2 value for the model prepared.
+
+library(readr)
+dataset <- read.csv(file.choose())
+View(dataset)
+##First business model##
+summary(dataset)
+describe(dataset)
+## YearsExperience mean=5.313,median=4.700,IQR=4.5##
+##  Salary    mean=76003,median=65237,IQR=43824 From this we can say mean and median are close so the data may be normally distributed##
+## second business model##
+attach(dataset)
+var(Salary)## 751550960 Data in this variable is varying from the mean the data is spread from the mean##
+sd(Salary)##27414.43 Data in this variable is  deviating from the mean##
+var(YearsExperience)##8.05 Data in this variable  close to mean##
+sd(YearsExperience)## 2.837 Data in this variable is spread from the mean##
+## Third business model##
+## Skewness says wheather the data is symmetric are skewed##
+skewness(Salary)##0.3361619 The data is Weakly positively skewed##
+skewness(YearsExperience)##0.3603123 The data is weakly positively skewed##
+##Fourth business model##
+##kurtosis says the shape of the data##
+kurtosis(Salary)##1.717087 if the kurthosis is less then three then the data has broader centeral peak and the data is spread##
+kurtosis(YearsExperience)##1.955248   if the kurthosis is less then three then the data has broader centeral peak and the data is spread##
+##Fifth business model##
+plot(dataset)##There is the linear relationship between two variables##
+plot_histogram(Salary)##histogram is known frequencies##
+boxplot(YearsExperience)## Box plot is used for to known about the outliners##
+boxplot(Salary)
+plot_correlation(dataset)## Correlation between the variables is 0.98 which is good and says there is strong relationship between the variables##
+##Model Bulding##
+model <- lm(Salary~ YearsExperience)
+summary(model)
+plot(model)
+##Multiple R-squared:  0.957,	Adjusted R-squared:  0.9554 ##
+
+pred <- predict(model)
+pred
+
+
